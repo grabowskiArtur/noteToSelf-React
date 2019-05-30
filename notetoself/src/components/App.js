@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Form,FormControl, Button} from 'react-bootstrap'; //it's not a default that's why the brackets are here!
-
+import Note from './Note';
 
 class App extends Component{
     constructor() {
@@ -51,7 +51,8 @@ class App extends Component{
                     /*drugi parametr zawsze bedzie indexem co z reszta widac w podpowiedzi!!*/
                     this.state.notes.map((note, index) => {
                         return(
-                            <div key={index}>{note.text + " a index to :" + index}</div>
+                            // teraz transportujemy do Note.js note(lewy chyba) ktory ma wartosc {note}
+                            <Note key={index} note={note}/> //self enclosing tag '/>'
                         )
                     })
                 }
