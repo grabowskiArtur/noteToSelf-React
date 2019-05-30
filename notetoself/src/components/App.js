@@ -1,6 +1,12 @@
 import React, {Component} from 'react';
 import {Form,FormControl, Button} from 'react-bootstrap'; //it's not a default that's why the brackets are here!
 import Note from './Note';
+// 3 podstawowe operacje na ciasteczkach, stworz. odczytaj, wywal all
+import {bake_cookie, read_cookie, delete_cookie} from 'sfcookies'
+
+//klucz dla naszych konkretnych cookiesow! czyli odwolujac sie do  tego keya mozemy uzywac tych wyzej wymienionych
+// funkcji!
+const cookie_key = 'NOTES';
 
 class App extends Component{
     constructor() {
@@ -11,6 +17,15 @@ class App extends Component{
             notes: [] // to bedzie tworzone nowe za kazdym razem a nie tylko dopisywane
         }
     }
+    //funkcja odpala sie po zaladowaniu komponentu od razu!
+    componentDidMount() {
+        //do notes wrzuc co masz w cookies pod tym keyem. chyba dziala jak lista ten read_cookie tylko nei ma get
+        // tylko od razu zwraca co cza wg keya
+        // dodatkowo ustawiamy jako initial state of notes dla odswiezonej strony!
+        this.setState( {notes : read_cookie(cookie_key)});
+        console.log("I ve already run componentDidMount function");
+    }
+
 
     submit(){
         const {notes, text} = this.state; //O.o! do text wchodzi automatycznie samo text! bo JS sam ogarnia ze to jest
@@ -33,6 +48,15 @@ class App extends Component{
         //to samo tutaj skoro na poczatku wyciaglismy notes to juz mozna sie od kopa do tego odwolac
         this.setState({notes}); //notes zaraz zginie wiec trzeba zapisac do obiektu ktory przezyje
         console.log(this.state);
+
+        //tak jak z reszta podpowiada, trzeba dac key i co ma "upiec". Wazne ze za kazdym razem robi jakby
+        // ciasteczko od nowa a nie doklada!
+        bake_cookie(cookie_key, this.state.notes);
+    }
+
+    clear(){
+        delete_cookie(cookie_key);
+        this.setState( {notes: []});
     }
 
     render() {
@@ -56,6 +80,8 @@ class App extends Component{
                         )
                     })
                 }
+                <hr/>
+                <Button onClick={() => this.clear()}>Clear Notes </Button>
             </div>
         )
     }
