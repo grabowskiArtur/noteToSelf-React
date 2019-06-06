@@ -3,10 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "ajv": "^6.0.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-scripts": "3.0.1",
-    "sfcookies": "^1.0.2"
+    "sfcookies": "^1.0.2",
+    "ts-loader": "^6.0.2",
+    "typescript": "^3.5.1"
   },
   "scripts": {
     "start": "react-scripts start",
